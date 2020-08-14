@@ -1,0 +1,15 @@
+{
+  "name": "howdoesone-jest-rewire",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "jest src"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "nodemon": "^2.0.4",
+    "rewire": "^5.0.0"
+  }
+}
