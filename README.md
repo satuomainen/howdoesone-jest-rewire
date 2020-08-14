@@ -2,6 +2,8 @@
 
 These are just my notes how to use [rewire] and create tests with [Jest].
 
+The main thing is in the [test file].
+
 ## Preparations
 
 Run `yarn install`
@@ -16,4 +18,5 @@ This should not be very interesting, but it goes like this: `yarn start`
 
 
 [rewire]: https://github.com/jhnns/rewire
-[Jest]: https://jestjs.io/en/ 
+[Jest]: https://jestjs.io/en/
+[test file]: ./src/production-module.test.js
