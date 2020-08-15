@@ -1,6 +1,39 @@
 const rewire = require('rewire');
+const sinon = require('sinon');
 
-describe('Examples how to use rewire', () => {
+describe('Examples how to use sinon with rewire', () => {
+  // This example shows how to use rewire to access a private object within
+  // a module and then change its behaviour with SinonJS
+  const productionRewired = rewire('./production-module');
+  const mockGetResources = () => 'I am here to mock you';
+
+  test('Case 0: original expectation', () => {
+    expect(productionRewired.generateImportantBusinessData())
+      .toBe('Original Analytics: Business is good');
+  })
+
+  test('Case 1: mocked expectation', () => {
+    const resourceManagerProduction = productionRewired.__get__('resourceManager');
+    const singleTestSandbox = sinon.createSandbox();
+
+    singleTestSandbox.stub(resourceManagerProduction, 'getResources').callsFake(mockGetResources)
+
+    expect(productionRewired.generateImportantBusinessData())
+      .toBe('Original Analytics: I am here to mock you');
+
+    singleTestSandbox.restore();
+  });
+
+  test('Case 2: original expectation again', () => {
+    expect(productionRewired.generateImportantBusinessData())
+      .toBe('Original Analytics: Business is good');
+  })
+
+});
+
+describe('Examples how to use rewire hazardously', () => {
+  // This example shows how to use plain rewire to change behaviour. This goes
+  // against recommendations in rewire's docs (not to use dot-notation).
   const productionRewired = rewire('./production-module');
   let restoreProductionModule;
 
@@ -44,7 +77,6 @@ describe('Examples how to use rewire', () => {
     expect(productionRewired.generateImportantBusinessData())
       .toBe(`Original Analytics: I am here to mock you every time`);
   });
-
 });
 
 // Here's a way that does not work when it's run repeatedly with --watch. Both tests will pass
